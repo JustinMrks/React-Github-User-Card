@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.userCard {
+  background-color: grey;
+  display: flex;
+  width: 80%;
+  height: 20vh;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.leftCard {
+  display: flex;
+  width: 60%;
+}
+
+.userCard img {
+  height: 100%;
+}
+
+* {
+  border: 1px solid purple;
+}

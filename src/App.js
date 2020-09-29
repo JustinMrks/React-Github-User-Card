@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
+import User from './Components/User'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    username: 'JustinMrks',
+    userData: {},
+    followers: []
+  }
+
+  componentDidMount() {
+    console.log('mounted component')
+    this.fetchUser()
+    this.fetchFollowers()
+  }
+
+  fetchUser = () => {
+    fetch(`https://api.github.com/users/${this.state.username}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ userData: data })
+      })
+      .catch(err => console.log(err))
+  }
+
+  fetchFollowers = () => {
+    fetch(`https://api.github.com/users/${this.state.username}/followers`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ followers: data })
+      })
+      .catch(err => console.log(err))
+  }
+
+  render() {
+    return(
+      <div>
+        <User user={this.state.userData}/>
+        {this.state.followers.map(follower => {
+          return(<User user={follower}/>)
+        })}
+      </div>)
+  }
 }
 
 export default App;
